@@ -4,7 +4,7 @@
       <img class="mr-2 rounded" src="<%= gravatar_url(task.user, { size: 50 }) %>" alt="">
       <div class="media-body">
         <div>
-          <%= link_to task.user.name, user_path(task.user) %> <span class="text-muted">posted at <%= task.created_at %></span>
+          <%= task.user.name %> <span class="text-muted">posted at <%= task.created_at %></span>
         </div>
         <div>
           <p class="mb-0">ステータス :<%= task.status %></p>
@@ -13,6 +13,7 @@
         <div>
           <% if current_user == task.user %>
             <%= link_to "Delete", task, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+            <%= link_to "Edit", edit_task_path(task), class: 'btn btn-primary btn-sm' %>
           <% end %>
         </div>
       </div>
