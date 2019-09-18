@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
-    before_action :set_task, only: [:show, :edit, :update, :destroy]
     before_action :require_user_logged_in
-    before_action :correct_user, only: [:destroy]
+    before_action :correct_user, only: [:show, :edit,:update, :destroy]
+    before_action :set_task, only: [:show, :edit, :update, :destroy]
     
     def index
-        @task = current_user.tasks.build
+       
         @tasks = current_user.tasks.order(id: :desc).page(params[:page])
     end
     
@@ -37,7 +37,7 @@ class TasksController < ApplicationController
      
         if @task.update(task_params)
             flash[:success] = "Taskが正常に更新されました！"
-            redirect_to task_url(@task)
+            redirect_to("/")
         else 
             flash.now[:danger] = "Taskが更新されませんでした！"
             render :edit
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
         @task.destroy
         
         flash[:success] = "タスクは正常に削除されました！"
-        redirect_to("/")
+        redirect_back(fallback_location: "/")
     end
     
     private
